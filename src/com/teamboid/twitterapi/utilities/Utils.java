@@ -6,6 +6,7 @@ import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
+import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,6 +15,40 @@ import java.util.Map.Entry;
  * @author Aidan Follestad
  */
 public class Utils {
+	/**
+	 * This function encodes byte[] into a hex
+	 * 
+	 * @param b
+	 * @return
+	 */
+	public static String byteArrayToHexString(byte[] data){
+		StringBuilder buf = new StringBuilder();
+        for (byte aData : data) {
+            int halfbyte = (aData >>> 4) & 0x0F;
+            int twoHalfs = 0;
+            do {
+                if ((0 <= halfbyte) && (halfbyte <= 9)) {
+                    buf.append((char) ('0' + halfbyte));
+                } else {
+                    buf.append((char) ('a' + (halfbyte - 10)));
+                }
+                halfbyte = aData & 0x0F;
+            } while (twoHalfs++ < 1);
+        }
+        return buf.toString();
+	}
+
+	
+	public static String sha1(String in){
+		try{
+			MessageDigest digest = MessageDigest.getInstance("SHA-1");
+			digest.update(in.getBytes());
+			return byteArrayToHexString(digest.digest());
+		} catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static String getBase64FromStream(InputStream is) throws Exception {
         ByteArrayOutputStream o = new ByteArrayOutputStream();

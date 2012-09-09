@@ -261,7 +261,9 @@ class TwitterBase extends RequestHandler implements Twitter {
         for(Long id : userIds) {
             param += Long.toString(id) + ",";
         }
-        return UserJSON.createUserList(getArray(Urls.LOOKUP_USERS + "?user_id=" + param));
+        List<HttpParam> p = new ArrayList<HttpParam>();
+        p.add(new HttpParam("user_id", param));
+        return UserJSON.createUserList(postArray(Urls.LOOKUP_USERS, p));
     }
 
     /**
@@ -960,18 +962,6 @@ class TwitterBase extends RequestHandler implements Twitter {
         return new RelatedResultsJSON(getArray(Urls.RELATED_RESULTS
         		.replace("{id}", Long.toString(statusId))));
     }
-    
-    String consumerKey = null;
-
-	@Override
-	public void setConsumerKey(String key) {
-		consumerKey = key;
-	}
-
-	@Override
-	public String getConsumerKey() {
-		return consumerKey;
-	}
 
     /**
      * {@inheritDoc}
@@ -988,5 +978,17 @@ class TwitterBase extends RequestHandler implements Twitter {
 			url += ("&max_results=" + maxResults);
 		}
 		return PlaceJSON.createPlaceList(getObject(url).getJSONObject("result").getJSONArray("places"));
+	}
+
+	@Override
+	public boolean supportsFeature(Feature feature) {
+		return true;
+	}
+	
+	@Override
+	public Status[] getUserMediaTimeline(String userName, Paging paging) throws Exception {
+		String url = Urls.MEDIA_TIMELINE + "&screen_name=" + userName;
+        if(paging != null) url += paging.getUrlString('&', true);
+        return StatusJSON.createStatusList(getArray(url));
 	}
 }

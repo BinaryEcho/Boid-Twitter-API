@@ -20,7 +20,6 @@ public class MediaServices {
 		registerService( ImgurMediaService.class );
 		registerService( FlickrMediaService.class );
 		registerService( CloudAppMediaService.class );
-		registerService( DroplrMediaService.class ); 
 	}
 	
 	public static ExternalMediaService getService(String name){

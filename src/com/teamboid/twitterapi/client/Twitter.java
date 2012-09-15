@@ -33,11 +33,16 @@ import java.io.InputStream;
 public interface Twitter {
 	
 	/**
-	 * If this instance supports a feature
-	 * @param feature
+	 * Sets the consumer key for use with OAuth-Echo services
+	 * @param key
+	 */
+	void setConsumerKey(String key);
+	
+	/**
+	 * Get the consumer key for use with OAuth-Echo services
 	 * @return
 	 */
-	boolean supportsFeature(Feature feature);
+	String getConsumerKey();
 
     /**
      * Sets whether or not SSL is enabled for network interactions.
@@ -769,14 +774,4 @@ public interface Twitter {
      * @throws Exception
      */
     Place[] getReverseGeocode(GeoLocation coordinates, String accuracy, Granularity gran, int maxResults) throws Exception;
-
-    /**
-     * Gets the user's media timeline. This is a list of statuses Twitter say should contain media,
-     * wether pic.twitter.com or an "parner" service
-     * @param userName The user you wish to lookup
-     * @undocumented
-     * @author kennydude
-     * @return
-     */
-    Status[] getUserMediaTimeline(String userName, Paging paging) throws Exception;
 }

@@ -5,6 +5,13 @@ package com.teamboid.twitterapi.client;
  * @author Aidan Follestad
  */
 public class Paging {
+	
+	/**
+     * Initializes new Paging instance.
+     */
+    public Paging() {
+    	_count = 25;
+    }
 
     /**
      * Initializes new Paging instance.
@@ -12,17 +19,6 @@ public class Paging {
      */
     public Paging(int count) {
         _count = count;
-    }
-    /**
-     * Initializes new Paging instance.
-     * @param count The number of results to retrieve.
-     * @param sinceId Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since_id, the since_id will be forced to the oldest ID available.
-     * @param maxId Returns results with an ID less than (that is, older than) or equal to the specified ID.
-     */
-    public Paging(int count, long sinceId, long maxId) {
-        _count = count;
-        _sinceId = sinceId;
-        _maxId = maxId;
     }
 
     private int _page;

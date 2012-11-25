@@ -1,6 +1,6 @@
 package com.teamboid.twitterapi.config;
 
-import com.teamboid.twitterapi.json.JSONObject;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 

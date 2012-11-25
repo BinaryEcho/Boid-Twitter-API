@@ -3,8 +3,8 @@ package com.teamboid.twitterapi.experimentalapis;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.teamboid.twitterapi.json.JSONArray;
-import com.teamboid.twitterapi.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import com.teamboid.twitterapi.status.Status;
 import com.teamboid.twitterapi.status.StatusJSON;
 

@@ -1,8 +1,8 @@
 package com.teamboid.twitterapi.status.entity.mention;
 
-import com.teamboid.twitterapi.json.JSONArray;
-import com.teamboid.twitterapi.json.JSONException;
-import com.teamboid.twitterapi.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 

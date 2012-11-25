@@ -12,8 +12,8 @@ import com.teamboid.twitterapi.status.entity.url.UrlEntity;
 import com.teamboid.twitterapi.status.entity.url.UrlEntityJSON;
 import com.teamboid.twitterapi.status.GeoLocation;
 import com.teamboid.twitterapi.utilities.Time;
-import com.teamboid.twitterapi.json.JSONArray;
-import com.teamboid.twitterapi.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import com.teamboid.twitterapi.utilities.Utils;
 
 import java.io.Serializable;

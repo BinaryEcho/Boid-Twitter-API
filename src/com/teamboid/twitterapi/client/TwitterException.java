@@ -1,6 +1,6 @@
 package com.teamboid.twitterapi.client;
 
-import com.teamboid.twitterapi.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * Represents a TwitterException, wrapping an error message returned from Twitter in JSON formatting.

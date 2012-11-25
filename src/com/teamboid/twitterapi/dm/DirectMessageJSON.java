@@ -4,8 +4,8 @@ import com.teamboid.twitterapi.user.User;
 import com.teamboid.twitterapi.user.UserJSON;
 import com.teamboid.twitterapi.utilities.Time;
 import com.teamboid.twitterapi.utilities.Utils;
-import com.teamboid.twitterapi.json.JSONArray;
-import com.teamboid.twitterapi.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;

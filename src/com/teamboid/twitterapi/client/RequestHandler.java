@@ -1,12 +1,11 @@
 package com.teamboid.twitterapi.client;
 
-import com.teamboid.twitterapi.json.JSONArray;
-import com.teamboid.twitterapi.json.JSONObject;
-
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.entity.mime.content.StringBody;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;

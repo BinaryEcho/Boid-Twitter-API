@@ -1,6 +1,6 @@
 package com.teamboid.twitterapi.search;
 
-import com.teamboid.twitterapi.json.JSONObject;
+import org.json.JSONObject;
 import com.teamboid.twitterapi.utilities.Utils;
 
 import java.io.Serializable;

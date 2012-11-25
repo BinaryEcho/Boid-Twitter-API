@@ -1,7 +1,7 @@
 package com.teamboid.twitterapi.list;
 
-import com.teamboid.twitterapi.json.JSONArray;
-import com.teamboid.twitterapi.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import com.teamboid.twitterapi.user.User;
 import com.teamboid.twitterapi.user.UserJSON;
 import com.teamboid.twitterapi.utilities.Utils;

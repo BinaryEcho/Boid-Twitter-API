@@ -13,6 +13,7 @@ import com.teamboid.twitterapi.user.UserJSON;
 import com.teamboid.twitterapi.utilities.Time;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.teamboid.twitterapi.media.ExternalMediaService;
 import com.teamboid.twitterapi.media.MediaServices;
 
@@ -21,13 +22,14 @@ import com.teamboid.twitterapi.utilities.Utils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 
 /**
  * Handles parsing JSON and assigning values to a {@link Status} interface.
  *
  * @author Aidan Follestad
  */
-public class StatusJSON implements Status, Serializable {
+public class StatusJSON implements Status, Serializable, Comparable<Status> {
 
 	private static final long serialVersionUID = 8853180403951169750L;
 
@@ -279,4 +281,21 @@ public class StatusJSON implements Status, Serializable {
         }
         return toReturn.toArray(new Status[0]);
     }
+    
+    @Override
+	public int compareTo(Status another) {
+		return getCreatedAt().compareTo(another.getCreatedAt());
+	}
+    
+    public static class StatusComparator implements Comparator<Status> {
+		public int compare(Status left, Status right) {
+			return right.compareTo(left);
+		}
+	}
+	
+	public static class StatusReverseComparator implements Comparator<Status> {
+		public int compare(Status left, Status right) {
+			return left.compareTo(right);
+		}
+	}
 }

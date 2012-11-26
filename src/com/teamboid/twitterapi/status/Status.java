@@ -13,7 +13,7 @@ import java.util.Calendar;
  * Represents a Tweet on Twitter.
  * @author Aidan Follestad
  */
-public interface Status extends Serializable {
+public interface Status extends Serializable, Comparable<Status> {
 
     /**
      * Gets the ID of the tweet.

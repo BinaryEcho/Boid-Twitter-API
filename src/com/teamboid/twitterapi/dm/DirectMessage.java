@@ -10,7 +10,7 @@ import java.util.Calendar;
  *
  * @author Aidan Follestad
  */
-public interface DirectMessage extends Serializable {
+public interface DirectMessage extends Serializable, Comparable<DirectMessage> {
 
     /**
      * Gets the date and time when the direct message was sent.

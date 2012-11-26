@@ -10,12 +10,13 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 
 /**
  * Handles parsing JSON and assigning values into a {@link DirectMessage} interface.
  * @author Aidan Follestad
  */
-public class DirectMessageJSON implements DirectMessage, Serializable {
+public class DirectMessageJSON implements DirectMessage, Serializable, Comparable<DirectMessage> {
 
 	private static final long serialVersionUID = -6166266603350967003L;
 
@@ -102,4 +103,21 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
         }
         return toReturn.toArray(new DirectMessage[0]);
     }
+    
+    @Override
+	public int compareTo(DirectMessage another) {
+		return getCreatedAt().compareTo(another.getCreatedAt());
+	}
+    
+    public static class DMComparator implements Comparator<DirectMessage> {
+		public int compare(DirectMessage left, DirectMessage right) {
+			return right.compareTo(left);
+		}
+	}
+	
+	public static class DMReverseComparator implements Comparator<DirectMessage> {
+		public int compare(DirectMessage left, DirectMessage right) {
+			return left.compareTo(right);
+		}
+	}
 }

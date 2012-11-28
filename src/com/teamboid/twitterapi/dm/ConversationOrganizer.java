@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 public class ConversationOrganizer {
 
-	public ConversationOrganizer(long myId) {
+	public ConversationOrganizer() {
 		convos = new ArrayList<Conversation>();
-		this.myId = myId;
 	}
 	
 	private ArrayList<Conversation> convos;
-	private long myId;
 	
 	public void add(BaseMessage baseMessage) {
 		int index = findConvoByThread(baseMessage.getThreadId());
@@ -19,7 +17,7 @@ public class ConversationOrganizer {
 			toSet.addMessage(baseMessage);
 			convos.set(index, toSet);
 		} else {
-			convos.add(new Conversation(baseMessage, myId));
+			convos.add(new Conversation(baseMessage));
 		}
 	}
 	

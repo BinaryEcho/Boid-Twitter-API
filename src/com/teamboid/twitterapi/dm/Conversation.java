@@ -4,17 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.util.Log;
+
 public class Conversation implements Serializable {
 
 	private static final long serialVersionUID = 8016196511797727337L;
 
-	public Conversation(BaseMessage initMsg, long myId) {
-		threadId = ((BaseMessage)initMsg).getThreadId();
+	public Conversation(BaseMessage m) {
 		messages = new ArrayList<BaseMessage>();
-		messages.add(initMsg);
-		
-		BaseMessage m = (BaseMessage)initMsg;
-		if(myId == m.getSenderId()) {
+		messages.add(m);
+		threadId = m.getThreadId();
+		Log.i("BANTER", "New convo initialized; outgoing? " + m.isOutgoing() + ", Sender: " + m.getSender() + ", Recipient: " + m.getRecipient());
+		if(m.isOutgoing()) {
 			endUserId = m.getRecipientId();
 			endUser = m.getRecipient();
 			if(m.getRecipientName() == null || m.getRecipientName().trim().isEmpty()) {

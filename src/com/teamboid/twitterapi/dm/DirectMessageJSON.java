@@ -90,7 +90,11 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 	}
 	@Override
 	public String getThreadId() {
-		return _senderId + ":" + _recipientId;
+		if(_myId == _senderId) {
+			return _recipientId + "";
+		} else {
+			return _senderId + "";
+		}
 	}
 	@Override
 	public String getSenderProfilePic() {

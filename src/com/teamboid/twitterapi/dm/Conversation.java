@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.util.Log;
-
 public class Conversation implements Serializable {
 
 	private static final long serialVersionUID = 8016196511797727337L;

@@ -80,7 +80,6 @@ public class Authorizer {
         toReturn._ssl = _ssl;
         toReturn._oauthToken = new Token(accessKey, accessSecret);
         toReturn._oauth = service;
-        toReturn.setCurrentUser(toReturn.verifyCredentials());
         return toReturn;
     }
 
@@ -97,7 +96,6 @@ public class Authorizer {
         toReturn._ssl = _ssl;
         toReturn._oauthToken = service.getAccessToken(requestToken, new Verifier(verifier));
         toReturn._oauth = service;
-        toReturn.setCurrentUser(toReturn.verifyCredentials());
         return toReturn;
     }
 

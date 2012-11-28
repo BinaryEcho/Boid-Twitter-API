@@ -33,15 +33,19 @@ import java.io.InputStream;
 public interface Twitter {
 	
 	/**
-	 * Gets the currently authenticated user (if this is an authorized instance).
-	 */
-	User getCurrentUser();
-	
-	/**
 	 * Sets the consumer key for use with OAuth-Echo services
 	 * @param key
 	 */
 	void setConsumerKey(String key);
+	
+	/**
+	 * Gets a User object representing the currently authenticated user/
+	 */
+	User verifyCredentials() throws Exception;
+	
+	void setCurrentUser(User user);
+	
+	User getCurrentUser();
 	
 	/**
 	 * Get the consumer key for use with OAuth-Echo services

@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * The base {@link Twitter} client class, contains the actual code content for
@@ -55,10 +56,16 @@ class TwitterBase extends RequestHandler implements Twitter {
     @Override
     public boolean getSslEnabled() { return _ssl; }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
+    private User _user;
+
+    public void setCurrentUser(User user) {
+    	_user = user;
+    }
+    
+    public User getCurrentUser() {
+    	return _user;
+    }
+    
     public User verifyCredentials() throws Exception {
         return new UserJSON(getObject(Urls.VERIFY_CREDENTIALS));
     }
@@ -271,7 +278,7 @@ class TwitterBase extends RequestHandler implements Twitter {
     public String getUserProfileImage(String screenName, ProfileImageSize size) throws Exception {
         String url = Urls.GET_PROFILE_IMAGE + "?screen_name=" + screenName;
         if(size != ProfileImageSize.NORMAL) {
-            url += "&size=" + size.name().toLowerCase();
+            url += "&size=" + size.name().toLowerCase(Locale.ENGLISH);
         }
         Response response = get(url, true);
         return response.getHeader("Location");
@@ -563,7 +570,7 @@ class TwitterBase extends RequestHandler implements Twitter {
     public UserList createList(String name, UserListMode mode, String description) throws Exception {
         List<HttpParam> pairs = new ArrayList<HttpParam>();
         pairs.add(new HttpParam("name", name));
-        pairs.add(new HttpParam("mode", mode.name().toLowerCase()));
+        pairs.add(new HttpParam("mode", mode.name().toLowerCase(Locale.ENGLISH)));
         if(description != null) {
             pairs.add(new HttpParam("description", description));
         }
@@ -626,7 +633,7 @@ class TwitterBase extends RequestHandler implements Twitter {
         if(name != null) {
             pairs.add(new HttpParam("name", name));
         }
-        pairs.add(new HttpParam("mode", mode.name().toLowerCase()));
+        pairs.add(new HttpParam("mode", mode.name().toLowerCase(Locale.ENGLISH)));
         if(description != null) {
             pairs.add(new HttpParam("description", description));
         }
@@ -845,7 +852,7 @@ class TwitterBase extends RequestHandler implements Twitter {
     public DirectMessage[] getDirectMessages(Paging paging) throws Exception {
         String url = Urls.DIRECT_MESSAGES;
         if(paging != null) url += paging.getUrlString('&', true);
-        return DirectMessageJSON.createMessageList(getArray(url));
+        return DirectMessageJSON.createMessageList(_user.getId(), getArray(url));
     }
 
     /**
@@ -855,7 +862,7 @@ class TwitterBase extends RequestHandler implements Twitter {
     public DirectMessage[] getSentDirectMessages(Paging paging) throws Exception {
         String url = Urls.DIRECT_MESSAGES_SENT;
         if(paging != null) url += paging.getUrlString('&', true);
-        return DirectMessageJSON.createMessageList(getArray(url));
+        return DirectMessageJSON.createMessageList(_user.getId(), getArray(url));
     }
 
     /**
@@ -866,7 +873,7 @@ class TwitterBase extends RequestHandler implements Twitter {
         List<HttpParam> pairs = new ArrayList<HttpParam>();
         pairs.add(new HttpParam("text", text));
         pairs.add(new HttpParam("screen_name", screenName));
-        return new DirectMessageJSON(postObject(Urls.CREATE_DIRECT_MESSAGE, pairs));
+        return new DirectMessageJSON(_user.getId(), postObject(Urls.CREATE_DIRECT_MESSAGE, pairs));
     }
 
     /**
@@ -877,7 +884,7 @@ class TwitterBase extends RequestHandler implements Twitter {
         List<HttpParam> pairs = new ArrayList<HttpParam>();
         pairs.add(new HttpParam("text", text));
         pairs.add(new HttpParam("user_id", Long.toString(userId)));
-        return new DirectMessageJSON(postObject(Urls.CREATE_DIRECT_MESSAGE, pairs));
+        return new DirectMessageJSON(_user.getId(), postObject(Urls.CREATE_DIRECT_MESSAGE, pairs));
     }
 
     /**
@@ -885,7 +892,7 @@ class TwitterBase extends RequestHandler implements Twitter {
      */
     @Override
     public DirectMessage showDirectMessage(Long msgId) throws Exception {
-        return new DirectMessageJSON(getObject(Urls.SHOW_DIRECT_MESSAGE.replace("{id}", Long.toString(msgId))));
+        return new DirectMessageJSON(_user.getId(), getObject(Urls.SHOW_DIRECT_MESSAGE.replace("{id}", Long.toString(msgId))));
     }
 
     /**
@@ -893,7 +900,7 @@ class TwitterBase extends RequestHandler implements Twitter {
      */
     @Override
     public DirectMessage destroyDirectMessage(Long msgId) throws Exception {
-        return new DirectMessageJSON(deleteObject(Urls.DESTROY_DIRECT_MESSAGE.replace("{id}", Long.toString(msgId))));
+        return new DirectMessageJSON(_user.getId(), deleteObject(Urls.DESTROY_DIRECT_MESSAGE.replace("{id}", Long.toString(msgId))));
     }
 
     /**
@@ -983,7 +990,7 @@ class TwitterBase extends RequestHandler implements Twitter {
 		if(accuracy != null && accuracy.length() > 0) {
 			url += "&accuracy=" + accuracy;
 		}
-		url += ("&granularity=" + gran.name().toLowerCase());
+		url += ("&granularity=" + gran.name().toLowerCase(Locale.ENGLISH));
 		if(maxResults > 0) {
 			url += ("&max_results=" + maxResults);
 		}

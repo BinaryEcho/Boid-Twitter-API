@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * Handles parsing JSON and assigning values to a {@link MediaEntity} interface.
@@ -45,7 +46,7 @@ public class MediaEntityJSON implements MediaEntity, Serializable {
     @Override
     public String getMediaUrl(MediaSize size) {
         if(size != MediaSize.MEDIUM) {
-            return _mediaUrl + ":" + size.name().toLowerCase();
+            return _mediaUrl + ":" + size.name().toLowerCase(Locale.ENGLISH);
         } else return _mediaUrl;
     }
 

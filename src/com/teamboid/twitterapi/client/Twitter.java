@@ -33,6 +33,11 @@ import java.io.InputStream;
 public interface Twitter {
 	
 	/**
+	 * Gets the currently authenticated user (if this is an authorized instance).
+	 */
+	User getCurrentUser();
+	
+	/**
 	 * Sets the consumer key for use with OAuth-Echo services
 	 * @param key
 	 */
@@ -53,12 +58,6 @@ public interface Twitter {
      * Gets whether or not SSL is enabled for network interactions.
      */
     boolean getSslEnabled();
-
-    /**
-     * Gets the current authenticated user's {@link User} object,
-     * @throws Exception
-     */
-    User verifyCredentials() throws Exception;
 
     /**
      * Gets Twitter's current API configuration, returns useful numbers that many apps need.

@@ -105,12 +105,12 @@ public class SearchQuery implements Serializable {
             String url = null;
             if(_geo != null && _query == null) {
                 url = "?q=geocode:" + _geo.getLatitude() + "," + _geo.getLongitude() + "," +
-                        _geo.getDistance() + _geo.getUnit().name().toLowerCase();
+                        _geo.getDistance() + _geo.getUnit().name().toLowerCase(Locale.ENGLISH);
             } else {
                 url = "?q=" + URLEncoder.encode(_query, "UTF-8");
                 if(_geo != null) {
                     url += ("&" + _geo.getLatitude() + "," + _geo.getLongitude() + "," +
-                            _geo.getDistance() + _geo.getUnit().name().toLowerCase());
+                            _geo.getDistance() + _geo.getUnit().name().toLowerCase(Locale.ENGLISH));
                 }
             }
             url += "&include_entities=true";
@@ -120,7 +120,7 @@ public class SearchQuery implements Serializable {
             if(_lang != null) url += "&lang=" + _lang;
             if(_until != null) url += "&until=" + _until;
             if(_resultType != ResultType.DEFAULT) {
-                url += "&result_type=" + _resultType.name().toLowerCase();
+                url += "&result_type=" + _resultType.name().toLowerCase(Locale.ENGLISH);
             }
             return url;
         } catch (UnsupportedEncodingException e) {

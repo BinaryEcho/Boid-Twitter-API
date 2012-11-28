@@ -1,5 +1,6 @@
 package org.scribe.utils;
 
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.scribe.model.OAuthConstants;
@@ -69,7 +70,7 @@ public class Preconditions {
 	 */
 	public static void checkValidOAuthCallback(String url, String errorMsg) {
 		checkEmptyString(url, errorMsg);
-		if (url.toLowerCase().compareToIgnoreCase(OAuthConstants.OUT_OF_BAND) != 0) {
+		if (url.toLowerCase(Locale.ENGLISH).compareToIgnoreCase(OAuthConstants.OUT_OF_BAND) != 0) {
 			check(isUrl(url), errorMsg);
 		}
 	}

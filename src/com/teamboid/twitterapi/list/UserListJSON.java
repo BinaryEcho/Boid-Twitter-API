@@ -8,6 +8,7 @@ import com.teamboid.twitterapi.utilities.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * @author Aidan Follestad
@@ -22,7 +23,7 @@ public class UserListJSON implements UserList, Serializable {
         _uri = json.optString("uri");
         _subscriberCount = json.optLong("subscriber_count");
         _memberCount = json.optLong("member_count");
-        _mode= UserListMode.valueOf(json.optString("mode").toUpperCase());
+        _mode= UserListMode.valueOf(json.optString("mode").toUpperCase(Locale.ENGLISH));
         _id = json.optLong("id");
         _fullName = Utils.unescape(json.optString("full_name"));
         _description = Utils.unescape(json.optString("description"));

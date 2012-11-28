@@ -1,6 +1,7 @@
 package com.teamboid.twitterapi.media;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Registration place for media services
@@ -29,7 +30,7 @@ public class MediaServices {
 	public static void registerService(Class<?> cls){
 		try{
 			ExternalMediaService ems = (ExternalMediaService) cls.newInstance();
-			services.put( ems.getServiceName().toLowerCase(), ems );
+			services.put( ems.getServiceName().toLowerCase(Locale.ENGLISH), ems );
 		}catch(Exception e){
 			e.printStackTrace();
 		}

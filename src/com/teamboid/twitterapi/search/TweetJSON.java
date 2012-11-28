@@ -19,6 +19,7 @@ import com.teamboid.twitterapi.utilities.Utils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Handles parsing JSON and associated values into a {@link Tweet} instance.
@@ -80,7 +81,7 @@ class TweetJSON implements Tweet, Serializable {
             if(!metadata.isNull("recent_retweets")) {
                 _recentRetweets = metadata.getInt("recent_retweets");
             }
-            _resultType = SearchQuery.ResultType.valueOf(metadata.getString("result_type").toUpperCase());
+            _resultType = SearchQuery.ResultType.valueOf(metadata.getString("result_type").toUpperCase(Locale.ENGLISH));
         }
         _profileImageUrl = Utils.unescape(json.getString("profile_image_url"));
         _source = Utils.unescape(json.getString("source"));

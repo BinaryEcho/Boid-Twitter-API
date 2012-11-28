@@ -72,13 +72,15 @@ public class Authorizer {
      * @param accessKey The access key previously stored.
      * @param accessSecret The access secret preeviously stored.
      * @return An authenticated Twitter instance.
+     * @throws Exception 
      */
-    public Twitter getAuthorizedInstance(String accessKey, String accessSecret) {
+    public Twitter getAuthorizedInstance(String accessKey, String accessSecret) throws Exception {
         TwitterBase toReturn = new TwitterBase();
         toReturn._debugOn = _debugMode;
         toReturn._ssl = _ssl;
         toReturn._oauthToken = new Token(accessKey, accessSecret);
         toReturn._oauth = service;
+        toReturn.setCurrentUser(toReturn.verifyCredentials());
         return toReturn;
     }
 
@@ -95,6 +97,7 @@ public class Authorizer {
         toReturn._ssl = _ssl;
         toReturn._oauthToken = service.getAccessToken(requestToken, new Verifier(verifier));
         toReturn._oauth = service;
+        toReturn.setCurrentUser(toReturn.verifyCredentials());
         return toReturn;
     }
 

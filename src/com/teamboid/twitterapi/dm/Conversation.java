@@ -14,7 +14,6 @@ public class Conversation implements Serializable {
 		messages = new ArrayList<BaseMessage>();
 		messages.add(m);
 		threadId = m.getThreadId();
-		Log.i("BANTER", "New convo initialized; outgoing? " + m.isOutgoing() + ", Sender: " + m.getSender() + ", Recipient: " + m.getRecipient());
 		if(m.isOutgoing()) {
 			endUserId = m.getRecipientId();
 			endUser = m.getRecipient();

@@ -9,7 +9,6 @@ public class Urls {
     public final static String BASE_API_URL = "http://api.twitter.com/1";
     public final static String BASE_MEDIA_URL = "http://upload.twitter.com/1";
 
-
     public final static String HOME_TIMELINE = "/statuses/home_timeline.json?include_entities=true&include_rts=true";
     public final static String MENTIONS = "/statuses/mentions.json?include_entities=true&include_rts=true";
     public final static String USER_TIMELINE = "/statuses/user_timeline.json?include_entities=true";

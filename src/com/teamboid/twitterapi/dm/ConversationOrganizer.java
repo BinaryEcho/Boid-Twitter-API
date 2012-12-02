@@ -11,9 +11,9 @@ public class ConversationOrganizer {
 	private ArrayList<Conversation> convos;
 	
 	public void add(DirectMessage baseMessage) {
-		String screenName = baseMessage.getRecipient();
+		String screenName = baseMessage.getSender();
 		if(baseMessage.isOutgoing()) {
-			screenName = baseMessage.getSender();
+			screenName = baseMessage.getRecipient();
 		}
 		int index = findConvoByUser(screenName);
 		if(index > -1) {

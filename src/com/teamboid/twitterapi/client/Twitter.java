@@ -43,10 +43,6 @@ public interface Twitter {
 	 */
 	User verifyCredentials() throws Exception;
 	
-	void setCurrentUser(User user);
-	
-	User getCurrentUser();
-	
 	/**
 	 * Get the consumer key for use with OAuth-Echo services
 	 * @return
@@ -228,9 +224,10 @@ public interface Twitter {
     /**
      * Retrieves a direct message by its ID.
      * @param msgId The ID of the message to get.
+     * @param me A user object representing the currently authenticated user, used to check if the message is outgoing or not.
      * @throws Exception
      */
-    DirectMessage showDirectMessage(Long msgId) throws Exception;
+    DirectMessage showDirectMessage(Long msgId, User me) throws Exception;
 
     /**
      * Deletes a direct message.

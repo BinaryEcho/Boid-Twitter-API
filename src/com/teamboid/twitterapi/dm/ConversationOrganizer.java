@@ -10,8 +10,12 @@ public class ConversationOrganizer {
 	
 	private ArrayList<Conversation> convos;
 	
-	public void add(BaseMessage baseMessage) {
-		int index = findConvoByThread(baseMessage.getThreadId());
+	public void add(DirectMessage baseMessage) {
+		String screenName = baseMessage.getRecipient();
+		if(baseMessage.isOutgoing()) {
+			screenName = baseMessage.getSender();
+		}
+		int index = findConvoByUser(screenName);
 		if(index > -1) {
 			Conversation toSet = convos.get(index);
 			toSet.addMessage(baseMessage);
@@ -25,18 +29,9 @@ public class ConversationOrganizer {
 		convos.clear();
 	}
 	
-	public int findConvoByThread(String threadId) {
+	public int findConvoByUser(String screenName) {
 		for(int i = 0; i < convos.size(); i++) {
-			if(convos.get(i).getThreadId().equals(threadId)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
-	public int findConvoByEndUser(long endUserId) {
-		for(int i = 0; i < convos.size(); i++) {
-			if(convos.get(i).getEndUserId() == endUserId) {
+			if(convos.get(i).getEndUser().equals(screenName)) {
 				return i;
 			}
 		}

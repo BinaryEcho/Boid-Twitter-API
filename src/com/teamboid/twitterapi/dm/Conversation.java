@@ -8,8 +8,8 @@ public class Conversation implements Serializable {
 
 	private static final long serialVersionUID = 8016196511797727337L;
 
-	public Conversation(BaseMessage m) {
-		messages = new ArrayList<BaseMessage>();
+	public Conversation(DirectMessage m) {
+		messages = new ArrayList<DirectMessage>();
 		messages.add(m);
 		threadId = m.getThreadId();
 		if(m.isOutgoing()) {
@@ -38,14 +38,14 @@ public class Conversation implements Serializable {
 	private String endUser;
 	private String endUserName;
 	private String endUserProfilePic;
-	private ArrayList<BaseMessage> messages;
+	private ArrayList<DirectMessage> messages;
 
 	public void sort() {
-		Collections.sort(messages, new BaseMessage.MessageComparator());
+		Collections.sort(messages, new DirectMessage.MessageComparator());
 	}
 	
 	public void sortReversed() {
-		Collections.sort(messages, new BaseMessage.MessageReverseComparator());
+		Collections.sort(messages, new DirectMessage.MessageReverseComparator());
 	}
 	
 	public String getThreadId() {
@@ -68,8 +68,8 @@ public class Conversation implements Serializable {
 		return endUserProfilePic;
 	}
 	
-	public void addMessage(BaseMessage msg) {
-		int addIndex = findAddIndex((BaseMessage)msg);
+	public void addMessage(DirectMessage msg) {
+		int addIndex = findAddIndex(msg);
 		if(addIndex == -1) {
 			messages.add(msg);
 		} else {
@@ -77,7 +77,7 @@ public class Conversation implements Serializable {
 		}
 	}
 	
-	private int findAddIndex(BaseMessage msg) {
+	private int findAddIndex(DirectMessage msg) {
 		for(int i = 0; i < messages.size(); i++) {
 			if(messages.get(i).getCreatedAt().compareTo(msg.getCreatedAt()) < 0) {
 				return i;
@@ -86,7 +86,7 @@ public class Conversation implements Serializable {
 		return -1;
 	}
 	
-	public ArrayList<BaseMessage> getMessages() {
+	public ArrayList<DirectMessage> getMessages() {
 		return messages;
 	}
 }

@@ -55,23 +55,7 @@ class TwitterBase extends RequestHandler implements Twitter {
      */
     @Override
     public boolean getSslEnabled() { return _ssl; }
-    
-    private User user;
-    
-    @Override
-    public void setCurrentUser(User user) {
-    	this.user = user;
-    }
-    
-    /**
-     * This is like a tag, it only gets the value you manually set via setCurrentUser(User). Use verifyCredentials()
-     * to get an instance of the currently authenticated user.
-     */
-    @Override
-    public User getCurrentUser() {
-    	return user;
-    }
-    
+        
     @Override
     public User verifyCredentials() throws Exception {
         return new UserJSON(getObject(Urls.VERIFY_CREDENTIALS));
@@ -859,7 +843,7 @@ class TwitterBase extends RequestHandler implements Twitter {
     public DirectMessage[] getDirectMessages(Paging paging) throws Exception {
         String url = Urls.DIRECT_MESSAGES;
         if(paging != null) url += paging.getUrlString('&', true);
-        return DirectMessageJSON.createMessageList(user.getId(), getArray(url));
+        return DirectMessageJSON.createMessageList(getArray(url), false);
     }
 
     /**
@@ -869,7 +853,7 @@ class TwitterBase extends RequestHandler implements Twitter {
     public DirectMessage[] getSentDirectMessages(Paging paging) throws Exception {
         String url = Urls.DIRECT_MESSAGES_SENT;
         if(paging != null) url += paging.getUrlString('&', true);
-        return DirectMessageJSON.createMessageList(user.getId(), getArray(url));
+        return DirectMessageJSON.createMessageList(getArray(url), true);
     }
 
     /**
@@ -880,7 +864,7 @@ class TwitterBase extends RequestHandler implements Twitter {
         List<HttpParam> pairs = new ArrayList<HttpParam>();
         pairs.add(new HttpParam("text", text));
         pairs.add(new HttpParam("screen_name", screenName));
-        return new DirectMessageJSON(user.getId(), postObject(Urls.CREATE_DIRECT_MESSAGE, pairs));
+        return new DirectMessageJSON(postObject(Urls.CREATE_DIRECT_MESSAGE, pairs), true);
     }
 
     /**
@@ -891,15 +875,15 @@ class TwitterBase extends RequestHandler implements Twitter {
         List<HttpParam> pairs = new ArrayList<HttpParam>();
         pairs.add(new HttpParam("text", text));
         pairs.add(new HttpParam("user_id", Long.toString(userId)));
-        return new DirectMessageJSON(user.getId(), postObject(Urls.CREATE_DIRECT_MESSAGE, pairs));
+        return new DirectMessageJSON(postObject(Urls.CREATE_DIRECT_MESSAGE, pairs), true);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public DirectMessage showDirectMessage(Long msgId) throws Exception {
-        return new DirectMessageJSON(user.getId(), getObject(Urls.SHOW_DIRECT_MESSAGE.replace("{id}", Long.toString(msgId))));
+    public DirectMessage showDirectMessage(Long msgId, User me) throws Exception {
+        return new DirectMessageJSON(getObject(Urls.SHOW_DIRECT_MESSAGE.replace("{id}", Long.toString(msgId))), me.getId());
     }
 
     /**
@@ -907,7 +891,7 @@ class TwitterBase extends RequestHandler implements Twitter {
      */
     @Override
     public DirectMessage destroyDirectMessage(Long msgId) throws Exception {
-        return new DirectMessageJSON(user.getId(), deleteObject(Urls.DESTROY_DIRECT_MESSAGE.replace("{id}", Long.toString(msgId))));
+        return new DirectMessageJSON(deleteObject(Urls.DESTROY_DIRECT_MESSAGE.replace("{id}", Long.toString(msgId))));
     }
 
     /**

@@ -20,7 +20,7 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 
 	private static final long serialVersionUID = -6166266603350967003L;
 
-	public DirectMessageJSON(long myId, JSONObject json) throws Exception {
+	public DirectMessageJSON(JSONObject json) throws Exception {
 		_createdAt = Time.getTwitterDate(json.getString("created_at"));
 		_senderScreenName = json.getString("sender_screen_name");
 		_sender = new UserJSON(json.getJSONObject("sender"));
@@ -30,7 +30,30 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 		_recipient = new UserJSON(json.getJSONObject("recipient"));
 		_recipientId = json.getLong("recipient_id");
 		_senderId = json.getLong("sender_id");
-		_myId = myId;
+	}
+	public DirectMessageJSON(JSONObject json, boolean outgoing) throws Exception {
+		_createdAt = Time.getTwitterDate(json.getString("created_at"));
+		_senderScreenName = json.getString("sender_screen_name");
+		_sender = new UserJSON(json.getJSONObject("sender"));
+		_text = Utils.unescape(json.getString("text"));
+		_recipientScreenName = json.getString("recipient_screen_name");
+		_id = json.getLong("id");
+		_recipient = new UserJSON(json.getJSONObject("recipient"));
+		_recipientId = json.getLong("recipient_id");
+		_senderId = json.getLong("sender_id");
+		_outgoing = outgoing;
+	}
+	public DirectMessageJSON(JSONObject json, long myId) throws Exception {
+		_createdAt = Time.getTwitterDate(json.getString("created_at"));
+		_senderScreenName = json.getString("sender_screen_name");
+		_sender = new UserJSON(json.getJSONObject("sender"));
+		_text = Utils.unescape(json.getString("text"));
+		_recipientScreenName = json.getString("recipient_screen_name");
+		_id = json.getLong("id");
+		_recipient = new UserJSON(json.getJSONObject("recipient"));
+		_recipientId = json.getLong("recipient_id");
+		_senderId = json.getLong("sender_id");
+		_outgoing = (myId == _senderId);
 	}
 
 	private Calendar _createdAt;
@@ -42,7 +65,7 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 	private User _recipient;
 	private long _recipientId;
 	private long _senderId;
-	private long _myId;
+	private boolean _outgoing;
 
 	@Override
 	public long getId() {
@@ -90,7 +113,7 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 	}
 	@Override
 	public String getThreadId() {
-		if(_myId == _senderId) {
+		if(_outgoing) {
 			return _recipientId + "";
 		} else {
 			return _senderId + "";
@@ -104,17 +127,16 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 	public String getRecipientProfilePic() {
 		return _recipient.getProfileImageUrl();
 	}
+	@Override
+	public boolean isOutgoing() {
+		return _outgoing;
+	}
 	
-	public static DirectMessage[] createMessageList(long myId, JSONArray array) throws Exception {
+	public static DirectMessage[] createMessageList(JSONArray array, boolean outgoing) throws Exception {
         ArrayList<DirectMessage> toReturn = new ArrayList<DirectMessage>();
         for(int i = 0; i < array.length(); i++) {
-            toReturn.add(new DirectMessageJSON(myId, array.getJSONObject(i)));
+            toReturn.add(new DirectMessageJSON(array.getJSONObject(i), outgoing));
         }
         return toReturn.toArray(new DirectMessage[0]);
     }
-
-	@Override
-	public boolean isOutgoing() {
-		return (_senderId == _myId);
-	}
 }

@@ -3,23 +3,55 @@ package com.teamboid.twitterapi.dm;
 import com.teamboid.twitterapi.user.User;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Comparator;
 
 /**
  * Represents a direct message, sent to another user or received from another user.
  *
  * @author Aidan Follestad
  */
-public interface DirectMessage extends Serializable, BaseMessage {
+public interface DirectMessage extends Serializable {
 
-    /**
-     * Gets the {@link User} object of the user that sent the direct message.
-     * If you only want the screen name of the sending user, use {@link com.teamboid.twitterapi.dm.DirectMessage#getSenderScreenName()}
-     */
-    User getSenderUser();
+	public abstract long getId();
+	
+	public abstract String getSender();
+	
+	public abstract long getSenderId();
+	
+	public abstract String getSenderName();
+	
+	public abstract String getRecipient();
+	
+	public abstract long getRecipientId();
+	
+	public abstract String getRecipientName();
+	
+	public abstract String getBody();
+	
+	public abstract Calendar getCreatedAt();
+	
+	public abstract String getThreadId();
+	
+	public abstract String getSenderProfilePic();
+	
+	public abstract String getRecipientProfilePic();
+	
+	public abstract boolean isOutgoing();
+	
+    public abstract User getSenderUser();
 
-    /**
-     * Gets the {@link User} object of the user that received the direct message.
-     * If you only want the screen name of the recipient user, use {@link com.teamboid.twitterapi.dm.DirectMessage#getRecipientScreenName()}
-     */
-    User getRecipientUser();
+    public abstract User getRecipientUser();
+    
+    public static class MessageComparator implements Comparator<DirectMessage> {
+		public int compare(DirectMessage left, DirectMessage right) {
+			return right.getCreatedAt().compareTo(left.getCreatedAt());
+		}
+	}
+
+	public static class MessageReverseComparator implements Comparator<DirectMessage> {
+		public int compare(DirectMessage left, DirectMessage right) {
+			return left.getCreatedAt().compareTo(right.getCreatedAt());
+		}
+	}
 }

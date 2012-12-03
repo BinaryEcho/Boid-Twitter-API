@@ -18,6 +18,11 @@ public class UserJSON implements User, Serializable {
 
 	private static final long serialVersionUID = 8223189548035894012L;
 
+	public UserJSON(long id, String screen, String profileImg) {
+		this._profileImageUrl = profileImg;
+		this._id = id;
+		this._screenName = screen;
+	}
 	public UserJSON(JSONObject json) throws Exception {
         _id = json.getInt("id");
         _name = json.getString("name");

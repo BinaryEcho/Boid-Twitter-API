@@ -141,12 +141,14 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 		return _error;
 	}
 
-	public static DirectMessage createErrorMessage(long senderId, String senderScreen, long recipientId, String recipientScreen, String body) {
+	public static DirectMessage createErrorMessage(User sender, long recipientId, String recipientScreen, String recipientProfileImg, String body) {
 		DirectMessageJSON msg = new DirectMessageJSON();
-		msg._senderId = senderId;
-		msg._senderScreenName = senderScreen;
+		msg._sender = sender;
+		msg._senderId = sender.getId();
+		msg._senderScreenName = sender.getScreenName();
 		msg._recipientId = recipientId;
 		msg._recipientScreenName = recipientScreen;
+		msg._recipient = new UserJSON(recipientId, recipientScreen, recipientProfileImg);
 		msg._text = body;
 		return msg;
 	}

@@ -47,6 +47,10 @@ public interface DirectMessage extends Serializable {
     
     public abstract boolean isError();
     
+    public abstract void setIsSending(boolean sending);
+    
+	public abstract boolean isSending();
+    
     public static class MessageComparator implements Comparator<DirectMessage> {
 		public int compare(DirectMessage left, DirectMessage right) {
 			return right.getCreatedAt().compareTo(left.getCreatedAt());

@@ -69,6 +69,7 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 	private long _senderId;
 	private boolean _outgoing;
 	private boolean _error;
+	private boolean _sending;
 	
 	@Override
 	public long getId() {
@@ -140,7 +141,13 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 	public boolean isError() {
 		return _error;
 	}
-
+	public void setIsSending(boolean sending) {
+		_sending = sending;
+	}
+	public boolean isSending() {
+		return _sending;
+	}
+	
 	public static DirectMessage createErrorMessage(User sender, long recipientId, String recipientScreen, String recipientProfileImg, String body) {
 		DirectMessageJSON msg = new DirectMessageJSON();
 		msg._sender = sender;

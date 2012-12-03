@@ -20,6 +20,8 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 
 	private static final long serialVersionUID = -6166266603350967003L;
 
+	public DirectMessageJSON() {
+	}
 	public DirectMessageJSON(JSONObject json) throws Exception {
 		_createdAt = Time.getTwitterDate(json.getString("created_at"));
 		_senderScreenName = json.getString("sender_screen_name");
@@ -137,6 +139,13 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 	}
 	public boolean isError() {
 		return _error;
+	}
+
+	public static DirectMessage createErrorMessage(long toId, String body) {
+		DirectMessageJSON msg = new DirectMessageJSON();
+		msg._recipientId = toId;
+		msg._text = body;
+		return msg;
 	}
 	
 	public static DirectMessage[] createMessageList(JSONArray array, boolean outgoing) throws Exception {

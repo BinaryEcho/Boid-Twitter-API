@@ -42,6 +42,10 @@ public interface DirectMessage extends Serializable {
     public abstract User getSenderUser();
 
     public abstract User getRecipientUser();
+ 
+    public abstract void setIsError(boolean error);
+    
+    public abstract boolean isError();
     
     public static class MessageComparator implements Comparator<DirectMessage> {
 		public int compare(DirectMessage left, DirectMessage right) {

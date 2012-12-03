@@ -66,7 +66,8 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 	private long _recipientId;
 	private long _senderId;
 	private boolean _outgoing;
-
+	private boolean _error;
+	
 	@Override
 	public long getId() {
 		return _id;
@@ -130,6 +131,12 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 	@Override
 	public boolean isOutgoing() {
 		return _outgoing;
+	}
+	public void setIsError(boolean error) {
+		_error = error;
+	}
+	public boolean isError() {
+		return _error;
 	}
 	
 	public static DirectMessage[] createMessageList(JSONArray array, boolean outgoing) throws Exception {

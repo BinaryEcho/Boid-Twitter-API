@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.teamboid.twitterapi.user.User;
+
 public class Conversation implements Serializable {
 
 	private static final long serialVersionUID = 8016196511797727337L;
@@ -13,19 +15,21 @@ public class Conversation implements Serializable {
 		messages.add(m);
 		threadId = m.getThreadId();
 		if(m.isOutgoing()) {
+			endUser = m.getRecipientUser();
 			endUserId = m.getRecipientId();
-			endUser = m.getRecipient();
+			endUserScreen = m.getRecipient();
 			if(m.getRecipientName() == null || m.getRecipientName().trim().isEmpty()) {
-				endUserName = endUser;
+				endUserName = "@" + endUserScreen;
 			} else {
 				endUserName = m.getRecipientName();
 			}
 			endUserProfilePic = m.getRecipientProfilePic();
 		} else {
+			endUser = m.getSenderUser();
 			endUserId = m.getSenderId();
-			endUser = m.getSender();
+			endUserScreen = m.getSender();
 			if(m.getSenderName() == null || m.getSenderName().trim().isEmpty()) {
-				endUserName = endUser;
+				endUserName = "@" + endUserScreen;
 			} else {
 				endUserName = m.getSenderName();
 			}
@@ -35,7 +39,8 @@ public class Conversation implements Serializable {
 	
 	private String threadId;
 	private long endUserId;
-	private String endUser;
+	private User endUser;
+	private String endUserScreen;
 	private String endUserName;
 	private String endUserProfilePic;
 	private ArrayList<DirectMessage> messages;
@@ -56,8 +61,12 @@ public class Conversation implements Serializable {
 		return endUserId;
 	}
 	
-	public String getEndUser() {
+	public User getEndUser() {
 		return endUser;
+	}
+	
+	public String getEndUserScreen() {
+		return endUserScreen;
 	}
 	
 	public String getEndUserName() {

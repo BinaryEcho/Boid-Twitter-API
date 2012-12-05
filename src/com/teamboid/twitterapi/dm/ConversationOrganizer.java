@@ -31,7 +31,7 @@ public class ConversationOrganizer {
 	
 	public int findConvoByUser(String screenName) {
 		for(int i = 0; i < convos.size(); i++) {
-			if(convos.get(i).getEndUser().equals(screenName)) {
+			if(convos.get(i).getEndUserScreen().equals(screenName)) {
 				return i;
 			}
 		}

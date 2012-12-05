@@ -148,18 +148,38 @@ public class DirectMessageJSON implements DirectMessage, Serializable {
 		return _sending;
 	}
 	
-	public static DirectMessage createErrorMessage(User sender, long recipientId, String recipientScreen, String recipientProfileImg, String body) {
+	public static DirectMessage createErrorMessage(User sender, User recipient, String body) {
 		DirectMessageJSON msg = new DirectMessageJSON();
 		msg._sender = sender;
 		msg._senderId = sender.getId();
 		msg._senderScreenName = sender.getScreenName();
-		msg._recipientId = recipientId;
-		msg._recipientScreenName = recipientScreen;
-		msg._recipient = new UserJSON(recipientId, recipientScreen, recipientProfileImg);
+		
+		msg._recipient = recipient;
+		msg._recipientId = recipient.getId();
+		msg._recipientScreenName = recipient.getScreenName();
+		
 		msg._text = body;
+		msg._error = true;
+		msg._outgoing = true;
 		return msg;
 	}
 	
+	public static DirectMessage createSendingMessage(User sender, User recipient, String body) {
+		DirectMessageJSON msg = new DirectMessageJSON();
+		msg._sender = sender;
+		msg._senderId = sender.getId();
+		msg._senderScreenName = sender.getScreenName();
+		
+		msg._recipient = recipient;
+		msg._recipientId = recipient.getId();
+		msg._recipientScreenName = recipient.getScreenName();
+		
+		msg._text = body;
+		msg._sending = true;
+		msg._outgoing = true;
+		return msg;
+	}
+
 	public static DirectMessage[] createMessageList(JSONArray array, boolean outgoing) throws Exception {
         ArrayList<DirectMessage> toReturn = new ArrayList<DirectMessage>();
         for(int i = 0; i < array.length(); i++) {
